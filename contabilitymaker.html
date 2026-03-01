@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Titulo Aqui.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--Programado Por Edwarly Castillo Silverio--!>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased pb-12">
+
+    <header class="bg-teal-800 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <h1 class="text-3xl font-bold tracking-tight">Placeholder.</h1>
+            <p class="mt-2 text-teal-100 text-lg">Placeholder - Tu Nombre</p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <section class="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+            <h2 class="text-xl font-semibold text-teal-900 mb-3">Sobre este Panel Interactivo</h2>
+            <p class="text-slate-600 leading-relaxed">
+                Coloque Una Descripcion Y Use <strong>STRONG<strong> Para Colocar El Texto En Negrita.
+            </p>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            <aside class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-[600px]">
+                <div class="bg-slate-100 px-4 py-3 border-b border-slate-200">
+                    <h3 class="font-semibold text-slate-800">Linea De Tiempo</h3>
+                </div>
+                <div id="timeline-container" class="p-2 overflow-y-auto flex-grow space-y-1">
+                </div>
+            </aside>
+
+            <section class="lg:col-span-3 space-y-6">
+                
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2 border-b pb-2">Transaccion Seleccionada</h3>
+                    <div id="active-desc" class="text-xl text-teal-700 font-medium min-h-[3rem] flex items-center">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                        <div class="text-sm text-blue-800 font-semibold uppercase tracking-wider mb-1">Total Activos</div>
+                        <div id="kpi-activos" class="text-3xl font-bold text-blue-900">$0</div>
+                        <div class="text-xs text-blue-600 mt-2">Efectivo + Placeholder + Placeholder</div>
+                    </div>
+                    <div class="bg-red-60 rounded-xl p-5 border border-red-100">
+                        <div class="text-sm text-red-800 font-semibold uppercase tracking-wider mb-1">Total Pasivos</div>
+                        <div id="kpi-pasivos" class="text-3xl font-bold text-red-900">$0</div>
+                        <div class="text-xs text-red-600 mt-2">Cuentas por pagar</div>
+                    </div>
+                    <div class="bg-emerald-50 rounded-xl p-5 border border-emerald-100">
+                        <div class="text-sm text-emerald-800 font-semibold uppercase tracking-wider mb-1">Capital Contable</div>
+                        <div id="kpi-capital" class="text-3xl font-bold text-emerald-900">$0</div>
+                        <div class="text-xs text-emerald-600 mt-2">Empresa, Capital</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+                        <h4 class="text-center font-semibold text-slate-700 mb-4">Composicion De Activos</h4>
+                        <div class="chart-container">
+                            <canvas id="assetsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+                        <h4 class="text-center font-semibold text-slate-700 mb-4">Ecuacion Contable (Equilibrio)</h4>
+                        <div class="chart-container">
+                            <canvas id="equationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 overflow-x-auto">
+            <h3 class="text-xl font-semibold text-teal-900 mb-4">Tabla De Analisis Completa</h3>
+            <p class="text-sm text-slate-500 mb-4">Vista General De Todas Las Transacciones Acumuladas Durante El Mes De Placeholder.</p>
+            <table class="w-full text-sm text-left text-slate-600 min-w-[800px]">
+                <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                    <tr>
+                        <th scope="col" class="px-4 py-3 rounded-tl-lg">Fecha</th>
+                        <th scope="col" class="px-4 py-3 text-right">Efectivo</th>
+                        <th scope="col" class="px-4 py-3 text-right">+ Placeholder</th>
+                        <th scope="col" class="px-4 py-3 text-right border-r-2 border-slate-300">+ Placeholder</th>
+                        <th scope="col" class="px-2 py-3 text-center font-bold text-lg">=</th>
+                        <th scope="col" class="px-4 py-3 text-right border-l-2 border-slate-300">Cuentas por pagar</th>
+                        <th scope="col" class="px-4 py-3 text-right">+ Capital</th>
+                        <th scope="col" class="px-4 py-3 rounded-tr-lg">Efecto en Capital</th>
+                    </tr>
+                </thead>
+                <tbody id="full-table-body" class="divide-y divide-slate-200">
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <script>
+        const formatCurrency = (value) => {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+        };
+
+        const txData = [ <!-- Cash: Efectivo. LoremIpsum: Coloca Lo Que Quieras De Titulo. Capital: Pasivos + Capital. Effect: Que Efecto Hace?
+            { date: "Inicio", desc: "Seleccione una transacción para comenzar.", effect: "Other", cash: 0, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 }, <!-- Deja Los Numeros De Esta Linea En 0. Lo De Abajo Puedes Cambiarlo
+            { date: "Mes 00", desc: "Explique Lo Que Sucede Aqui", effect: "Other", cash: 00000, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 },
+            { date: "Mes 00", desc: "Explique Lo Que Sucede Aqui", effect: "Other", cash: 00000, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 },
+            { date: "Mes 00", desc: "Explique Lo Que Sucede Aqui", effect: "Other", cash: 00000, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 },
+            { date: "Mes 00", desc: "Explique Lo Que Sucede Aqui", effect: "Other", cash: 00000, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 },
+            { date: "Mes 00", desc: "Explique Lo Que Sucede Aqui", effect: "Other", cash: 00000, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 },
+            { date: "Mes 00", desc: "Explique Lo Que Sucede Aqui", effect: "Other", cash: 00000, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 },
+            { date: "Mes 00", desc: "Explique Lo Que Sucede Aqui", effect: "Other", cash: 00000, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 },
+            { date: "Mes 00", desc: "Explique Lo Que Sucede Aqui", effect: "Other", cash: 00000, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 },
+			{ date: "Mes 00", desc: "Explique Lo Que Sucede Aqui", effect: "Other", cash: 00000, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 },
+			{ date: "Mes 00", desc: "Explique Lo Que Sucede Aqui", effect: "Other", cash: 00000, LoremIpsum: 0, LoremIpsum: 0, LoremIpsum: 0, capital: 0 }
+        ];
+
+        let currentStateIndex = 0;
+        let assetsChartInstance = null;
+        let equationChartInstance = null;
+
+        function initApp() {
+            renderTimeline();
+            renderTable();
+            initCharts();
+            updateUI(0);
+        }
+
+        function renderTimeline() {
+            const container = document.getElementById('timeline-container');
+            container.innerHTML = '';
+            
+            txData.forEach((tx, index) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left px-4 py-3 rounded-lg text-sm transition-colors duration-200 border-l-4 focus:outline-none ${index === 0 ? 'hidden' : 'block'} mb-1`;
+                
+                btn.onclick = () => selectTransaction(index);
+                
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'font-bold block text-slate-700';
+                dateSpan.textContent = tx.date;
+                
+                const descSpan = document.createElement('span');
+                descSpan.className = 'text-xs text-slate-500 truncate block mt-1';
+                descSpan.textContent = tx.effect || "Cambio en saldos";
+
+                btn.appendChild(dateSpan);
+                btn.appendChild(descSpan);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectTransaction(index) {
+            currentStateIndex = index;
+            updateUI(index);
+        }
+
+        function updateUI(index) {
+            const tx = txData[index];
+            const totalActivos = tx.cash + tx.supplies + tx.land;
+            const totalPasivos = tx.ap;
+            const totalCapital = tx.capital;
+
+            document.getElementById('active-desc').textContent = tx.date + ": " + tx.desc;
+            document.getElementById('kpi-activos').textContent = formatCurrency(totalActivos);
+            document.getElementById('kpi-pasivos').textContent = formatCurrency(totalPasivos);
+            document.getElementById('kpi-capital').textContent = formatCurrency(totalCapital);
+
+            const buttons = document.getElementById('timeline-container').children;
+            for (let i = 0; i < buttons.length; i++) {
+                if(i === 0) continue;
+                if (i <= index) {
+                    buttons[i].classList.remove('bg-white', 'border-transparent', 'hover:bg-slate-100');
+                    if (i === index) {
+                        buttons[i].classList.add('bg-teal-50', 'border-teal-500', 'shadow-sm');
+                        buttons[i].classList.remove('bg-slate-50', 'border-slate-300', 'opacity-70');
+                    } else {
+                        buttons[i].classList.add('bg-slate-50', 'border-slate-300', 'opacity-70');
+                        buttons[i].classList.remove('bg-teal-50', 'border-teal-500', 'shadow-sm');
+                    }
+                } else {
+                    buttons[i].classList.add('bg-white', 'border-transparent', 'hover:bg-slate-100');
+                    buttons[i].classList.remove('bg-teal-50', 'border-teal-500', 'shadow-sm', 'bg-slate-50', 'border-slate-300', 'opacity-70');
+                }
+            }
+
+            updateCharts(tx);
+            highlightTableRow(index);
+        }
+
+        function initCharts() {
+            const ctxAssets = document.getElementById('assetsChart').getContext('2d');
+            assetsChartInstance = new Chart(ctxAssets, {
+                type: 'bar',
+                data: { 
+                    labels: ['Titulo Del Pilar 1', 'Titulo Del Pilar 2', 'Titulo Del Pilar 3'],
+                    datasets: [{
+                        label: 'Valor ($)',
+                        data: [0, 0, 0],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b'],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: (ctx) => formatCurrency(ctx.raw) } }
+                    },
+                    scales: { <!-- suggestedMax: Tamaño Maximo De Los Primeros 3 Pilares
+                        y: { beginAtZero: true, suggestedMax: 90000, ticks: { callback: (val) => '$' + val/1000 + 'k' } }
+                    }
+                }
+            });
+
+            const ctxEquation = document.getElementById('equationChart').getContext('2d');
+            equationChartInstance = new Chart(ctxEquation, {
+                type: 'bar',
+                data: {
+                    labels: ['ACTIVOS', 'PASIVOS + CAPITAL'],
+                    datasets: [ <!-- Ecuacion Contable Equilibrio. backgroundColor: Colores En HTML5. Stack: Donde Se Van A Apilar Las Barras?
+                        { label: 'Pilar Derecho 1', data: [0, 0], backgroundColor: '#3b82f6', stack: 'Stack 0' },
+                        { label: 'Pilar Derecho 2', data: [0, 0], backgroundColor: '#10b981', stack: 'Stack 0' },
+                        { label: 'Pilar Derecho 3', data: [0, 0], backgroundColor: '#f59e0b', stack: 'Stack 0' },
+                        { label: 'Pilar Derecho 4', data: [0, 0], backgroundColor: '#ef4444', stack: 'Stack 0' },
+                        { label: 'Pilar Derecho 5', data: [0, 0], backgroundColor: '#8b5cf6', stack: 'Stack 0' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } },
+                        tooltip: { callbacks: { label: (ctx) => ctx.dataset.label + ': ' + formatCurrency(ctx.raw) } }
+                    },
+                    scales: {
+                        x: { stacked: true }, <!-- suggestedMax Tamaño Maximo De Los Otros Pilares De La Derecha
+                        y: { stacked: true, beginAtZero: true, suggestedMax: 90000, ticks: { callback: (val) => '$' + val/1000 + 'k' } }
+                    }
+                }
+            });
+        }
+
+        function updateCharts(tx) {
+            assetsChartInstance.data.datasets[0].data = [tx.cash, tx.supplies, tx.land];
+            assetsChartInstance.update();
+
+            equationChartInstance.data.datasets[0].data = [tx.cash, 0];
+            equationChartInstance.data.datasets[1].data = [tx.supplies, 0];
+            equationChartInstance.data.datasets[2].data = [tx.land, 0];
+            equationChartInstance.data.datasets[3].data = [0, tx.ap];
+            equationChartInstance.data.datasets[4].data = [0, tx.capital];
+            equationChartInstance.update();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('full-table-body');
+            tbody.innerHTML = '';
+            
+            let prevCash=0, prevSupplies=0, prevLand=0, prevAp=0, prevCap=0;
+
+            for(let i=1; i<txData.length; i++) {
+                const tx = txData[i];
+                const tr = document.createElement('tr');
+                tr.id = `row-${i}`;
+                tr.className = "hover:bg-slate-50 transition-colors duration-150";
+
+                let diffCash = tx.cash - prevCash;
+                let diffSup = tx.supplies - prevSupplies;
+                let diffLand = tx.land - prevLand;
+                let diffAp = tx.ap - prevAp;
+                let diffCap = tx.capital - prevCap;
+
+                const makeCell = (val, isTotal = false) => {
+                    if (val === 0 && !isTotal) return '<td class="px-4 py-2 text-right"></td>';
+                    const color = val < 0 ? 'text-red-500' : (val > 0 && !isTotal ? 'text-green-600' : 'text-slate-700');
+                    const sign = val > 0 && !isTotal ? '+' : '';
+                    return `<td class="px-4 py-2 text-right ${color} ${isTotal?'font-semibold':''}">${sign}${formatCurrency(val)}</td>`;
+                };
+
+                let rowHtml = `<td class="px-4 py-2 font-medium">${tx.date}</td>`;
+                <!-- Para La Tabla Se Calculan Algunas Variables
+                if (i === 1) { <!-- Si El Dia Del Mes Seleccionado Es 1-12 Se Mostrara El Texto Sin Efecto Financiero. Si Es 0 El Texto No Se Mostrara
+                    rowHtml += `<td colspan="7" class="px-4 py-2 text-slate-400 italic text-center">Sin Efecto Einanciero</td>`;
+                } else {
+                    rowHtml += makeCell(diffCash);
+                    rowHtml += makeCell(diffSup);
+                    rowHtml += `<td class="px-4 py-2 text-right border-r-2 border-slate-300 ${diffLand>0?'text-green-600':''}">${diffLand>0?'+'+formatCurrency(diffLand):''}</td>`;
+                    rowHtml += `<td class="px-2 py-2 text-center text-slate-300">=</td>`;
+                    rowHtml += `<td class="px-4 py-2 text-right border-l-2 border-slate-300 ${diffAp>0?'text-green-600':(diffAp<0?'text-red-500':'')}">${diffAp>0?'+':''}${diffAp!==0?formatCurrency(diffAp):''}</td>`;
+                    rowHtml += makeCell(diffCap);
+                    rowHtml += `<td class="px-4 py-2 text-xs text-slate-500">${tx.effect}</td>`;
+                }
+
+                tr.innerHTML = rowHtml;
+                tbody.appendChild(tr);
+
+                const trSaldo = document.createElement('tr');
+                trSaldo.className = "bg-slate-50/50 text-xs italic";
+                trSaldo.innerHTML = `
+                    <td class="px-4 py-1 text-slate-400">Saldo</td>
+                    ${makeCell(tx.cash, true)}
+                    ${makeCell(tx.supplies, true)}
+                    <td class="px-4 py-1 text-right border-r-2 border-slate-300 font-semibold text-slate-700">${formatCurrency(tx.land)}</td>
+                    <td class="px-2 py-1 text-center text-slate-300">=</td>
+                    <td class="px-4 py-1 text-right border-l-2 border-slate-300 font-semibold text-slate-700">${formatCurrency(tx.ap)}</td>
+                    ${makeCell(tx.capital, true)}
+                    <td class="px-4 py-1"></td>
+                `;
+                tbody.appendChild(trSaldo);
+
+                prevCash = tx.cash;
+                prevSupplies = tx.supplies;
+                prevLand = tx.land;
+                prevAp = tx.ap;
+                prevCap = tx.capital;
+            }
+        }
+
+        function highlightTableRow(index) {
+            const tbody = document.getElementById('full-table-body');
+            Array.from(tbody.children).forEach(row => {
+                row.classList.remove('bg-teal-50');
+            });
+            if (index > 0) {
+                const targetRow = document.getElementById(`row-${index}`);
+                if (targetRow) {
+                    targetRow.classList.add('bg-teal-50');
+                    targetRow.nextElementSibling.classList.add('bg-teal-50'); 
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
